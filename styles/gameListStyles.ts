@@ -200,4 +200,26 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: '#D1D5DB',
   },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+  },
+  statItem: {
+    fontSize: 12,
+    color: '#6B7280',
+    fontWeight: '600',
+  },
+  clearButton: {
+    marginTop: 8,
+    alignSelf: 'center',
+  },
+  clearButtonText: {
+    color: '#EF4444',
+    fontSize: 12,
+    fontWeight: '600',
+  },
 });

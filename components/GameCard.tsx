@@ -17,7 +17,10 @@ const GameCard = ({ item }: Props) => {
 
   return (
     <View style={[styles.card, item.sold && styles.cardSold]}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image 
+        source={{ uri: item.image || 'https://via.placeholder.com/500' }} 
+        style={styles.image} 
+      />
       <View style={styles.info}>
         <View style={styles.titleRow}>
           <Text style={[styles.title, item.sold && styles.titleSold]}>
@@ -37,7 +40,7 @@ const GameCard = ({ item }: Props) => {
         </View>
         
         <Text style={styles.description} numberOfLines={2}>
-          {item.description}
+          {item.description || 'Немає опису'}
         </Text>
         
         <Text style={styles.date}>📅 {item.releaseDate}</Text>

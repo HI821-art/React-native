@@ -2,12 +2,13 @@ export type Game = {
   readonly id: number;
   title: string;
   price: number;
-  description: string;
+  description: string | null;
   category: string;
-  image: string;
-  releaseDate: string; // Дата релізу
-  rating: 'low' | 'medium' | 'high'; // Рейтинг (замість пріоритету)
-  sold: boolean; // Продано чи ні (замість done/to-do)
+  image: string | null;
+  releaseDate: string;
+  rating: 'low' | 'medium' | 'high';
+  sold: boolean;
+  createdAt?: Date | null;
 };
 
 export type GameFormData = {

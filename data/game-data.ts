@@ -1,4 +1,5 @@
-// data/game-data.ts
+import { gamesTable as games } from '../database/schema';
+import { db } from '../database/client';
 
 import { Game } from '../models/game';
 
@@ -13,6 +14,7 @@ export const mockGames: Game[] = [
     releaseDate: "2017-03-03",
     rating: "high",
     sold: false,
+    createdAt: null,
   },
   {
     id: 2,
@@ -24,6 +26,7 @@ export const mockGames: Game[] = [
     releaseDate: "2020-12-10",
     rating: "medium",
     sold: false,
+    createdAt: null,
   },
   {
     id: 3,
@@ -35,6 +38,7 @@ export const mockGames: Game[] = [
     releaseDate: "2022-11-09",
     rating: "high",
     sold: true,
+    createdAt: null,
   },
   {
     id: 4,
@@ -46,6 +50,7 @@ export const mockGames: Game[] = [
     releaseDate: "2011-11-18",
     rating: "high",
     sold: false,
+    createdAt: null,
   },
   {
     id: 5,
@@ -57,6 +62,7 @@ export const mockGames: Game[] = [
     releaseDate: "2023-09-29",
     rating: "medium",
     sold: false,
+    createdAt: null,
   },
   {
     id: 6,
@@ -68,6 +74,7 @@ export const mockGames: Game[] = [
     releaseDate: "2022-02-25",
     rating: "high",
     sold: true,
+    createdAt: null,
   },
   {
     id: 7,
@@ -79,6 +86,7 @@ export const mockGames: Game[] = [
     releaseDate: "2023-11-10",
     rating: "medium",
     sold: false,
+    createdAt: null,
   },
   {
     id: 8,
@@ -90,6 +98,7 @@ export const mockGames: Game[] = [
     releaseDate: "2016-02-26",
     rating: "high",
     sold: false,
+    createdAt: null,
   },
   {
     id: 9,
@@ -101,6 +110,7 @@ export const mockGames: Game[] = [
     releaseDate: "2018-10-26",
     rating: "high",
     sold: true,
+    createdAt: null,
   },
   {
     id: 10,
@@ -112,6 +122,7 @@ export const mockGames: Game[] = [
     releaseDate: "2015-05-19",
     rating: "high",
     sold: false,
+    createdAt: null,
   },
   {
     id: 11,
@@ -123,17 +134,19 @@ export const mockGames: Game[] = [
     releaseDate: "2017-02-24",
     rating: "medium",
     sold: false,
+    createdAt: null,
   },
   {
     id: 12,
     title: "Overwatch 2",
-    price: 0.00,
+    price: 0.0,
     description: "Experience the extraordinary. Join forces with friends and fight across the world.",
     category: "Shooter",
     image: "https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?w=500",
     releaseDate: "2022-10-04",
     rating: "medium",
     sold: false,
+    createdAt: null,
   },
   {
     id: 13,
@@ -145,6 +158,7 @@ export const mockGames: Game[] = [
     releaseDate: "2020-03-20",
     rating: "medium",
     sold: false,
+    createdAt: null,
   },
   {
     id: 14,
@@ -156,6 +170,7 @@ export const mockGames: Game[] = [
     releaseDate: "2020-09-17",
     rating: "high",
     sold: false,
+    createdAt: null,
   },
   {
     id: 15,
@@ -167,5 +182,29 @@ export const mockGames: Game[] = [
     releaseDate: "2013-09-17",
     rating: "high",
     sold: true,
+    createdAt: null,
   },
 ];
+
+
+export async function seedGames() {
+  try {
+    for (const game of mockGames) {
+      await db.insert(games).values({
+        title: game.title,
+        price: game.price,
+        description: game.description ?? undefined,
+        category: game.category,
+        image: game.image ?? undefined,
+        releaseDate: game.releaseDate,
+        rating: game.rating,
+        sold: Boolean(game.sold),
+        createdAt: new Date(),
+      }).run();
+    }
+    console.log('🌱 Дані успішно додані');
+  } catch (error) {
+    console.error('❌ Помилка seed:', error);
+    throw error;
+  }
+}
