@@ -9,6 +9,12 @@ export type Game = {
   rating: 'low' | 'medium' | 'high';
   sold: boolean;
   createdAt?: Date | null;
+
+  isViewed?: boolean;           
+  isNew?: boolean;               
+  originalPrice?: number | null; 
+  saleEndDate?: string | null;   
+  isWishlist?: boolean; 
 };
 
 export type GameFormData = {

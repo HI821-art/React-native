@@ -33,7 +33,43 @@ export default function GameList() {
     maxPrice: 0,
     minPrice: 0,
   });
+ const handleToggleWishlist = async (id: number) => {
+    try {
+      const game = games.find(g => g.id === id);
+      if (!game) return;
+      
+      if (game.isWishlist) {
+        await gameQueries.removeFromWishlist(id);
+      } else {
+        await gameQueries.addToWishlist(id);
+      }
+  
+      await refreshGames();
+    } catch (error) {
+      console.error('Помилка:', error);
+    }
+  };
 
+  // Встановити знижку
+  const handleSetSale = async (id: number, discount: number, endDate: string) => {
+    try {
+      await gameQueries.setSale(id, discount, endDate);
+      await refreshGames();
+      Alert.alert('✅', `Знижку ${discount}% встановлено!`);
+    } catch (error) {
+      console.error('Помилка:', error);
+    }
+  };
+
+  // Позначити як переглянуту
+  const handleMarkAsViewed = async (id: number) => {
+    try {
+      await gameQueries.markAsViewed(id);
+      await refreshGames();
+    } catch (error) {
+      console.error('Помилка:', error);
+    }
+  };
   useEffect(() => {
     initializeDatabase();
   }, []);
