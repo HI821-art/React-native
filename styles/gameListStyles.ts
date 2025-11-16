@@ -222,4 +222,22 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
   },
+  
+  actionRow: {
+  flexDirection: 'row',
+  gap: 8,
+  marginTop: 8,
+  justifyContent: 'center',
+},
+testButton: {
+  backgroundColor: '#3B82F6',
+  paddingHorizontal: 12,
+  paddingVertical: 6,
+  borderRadius: 6,
+},
+testButtonText: {
+  color: '#FFFFFF',
+  fontSize: 11,
+  fontWeight: '600',
+},
 });

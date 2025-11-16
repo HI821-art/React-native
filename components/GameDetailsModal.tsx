@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Modal,
-  View,
-  Text,
   Image,
-  TouchableOpacity,
-  StyleSheet,
+  Modal,
   ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import type { Game } from '../database/schema';
 
@@ -14,9 +14,12 @@ type Props = {
   visible: boolean;
   game: Game | null;
   onClose: () => void;
+  onToggleWishlist?: (id: number) => Promise<void>;
+  onSetSale?: (id: number, discount: number, endDate: string) => Promise<void>;
+  onDelete?: (id: number, title: string) => void;
 };
 
-const GameDetailsModal = ({ visible, game, onClose }: Props) => {
+const GameDetailsModal = ({ visible, game, onClose, onToggleWishlist, onSetSale, onDelete }: Props) => {
   if (!game) return null;
 
   return (
@@ -31,21 +34,53 @@ const GameDetailsModal = ({ visible, game, onClose }: Props) => {
 
             <View style={styles.headerRow}>
               <Text style={styles.title}>{game.title}</Text>
-              {game.sold && (
-                <Text style={styles.soldBadge}>✓ Продано</Text>
-              )}
+              {game.sold && <Text style={styles.soldBadge}>✓ Продано</Text>}
             </View>
 
             <Text style={styles.price}>💰 {game.price.toFixed(2)} $</Text>
-            <Text style={styles.rating}>Рейтинг: {game.rating === 'low' ? '⭐' : game.rating === 'medium' ? '⭐⭐' : '⭐⭐⭐'}</Text>
+            <Text style={styles.rating}>
+              Рейтинг: {game.rating === 'low' ? '⭐' : game.rating === 'medium' ? '⭐⭐' : '⭐⭐⭐'}
+            </Text>
 
-            <Text style={styles.label}>Категорія: <Text style={styles.value}>{game.category}</Text></Text>
-            <Text style={styles.label}>Дата виходу: <Text style={styles.value}>{game.releaseDate}</Text></Text>
+            <Text style={styles.label}>
+              Категорія: <Text style={styles.value}>{game.category}</Text>
+            </Text>
+            <Text style={styles.label}>
+              Дата виходу: <Text style={styles.value}>{game.releaseDate}</Text>
+            </Text>
 
             <Text style={[styles.label, { marginTop: 10 }]}>Опис:</Text>
-            <Text style={styles.description}>
-              {game.description || 'Опис відсутній'}
-            </Text>
+            <Text style={styles.description}>{game.description || 'Опис відсутній'}</Text>
+
+            {/* Кнопки дій */}
+            {onToggleWishlist && (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => onToggleWishlist(game.id)}
+              >
+                <Text style={styles.actionButtonText}>
+                  {game.isWishlist ? '❌ Видалити з Wishlist' : '💝 Додати до Wishlist'}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {onSetSale && (
+              <TouchableOpacity
+                style={styles.actionButton}
+                onPress={() => onSetSale(game.id, 20, '2025-12-31')} // приклад
+              >
+                <Text style={styles.actionButtonText}>💰 Встановити знижку</Text>
+              </TouchableOpacity>
+            )}
+
+            {onDelete && (
+              <TouchableOpacity
+                style={[styles.actionButton, { backgroundColor: '#EF4444' }]}
+                onPress={() => onDelete(game.id, game.title)}
+              >
+                <Text style={styles.actionButtonText}>🗑️ Видалити гру</Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity style={styles.closeButton} onPress={onClose}>
               <Text style={styles.closeButtonText}>Закрити</Text>
@@ -140,6 +175,19 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
+  },
+  actionButton: {
+    backgroundColor: '#3B82F6',
+    marginHorizontal: 16,
+    marginTop: 10,
+    borderRadius: 8,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: '600',
   },
 });

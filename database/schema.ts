@@ -10,22 +10,23 @@ export const gamesTable = sqliteTable('games', {
   image: text('image'),
   releaseDate: text('release_date').notNull(),
   rating: text('rating', { enum: ['low', 'medium', 'high'] }).notNull().default('medium'),
-  
+
   // Статуси
   sold: integer('sold', { mode: 'boolean' }).notNull().default(false),
   isWishlist: integer('is_wishlist', { mode: 'boolean' }).notNull().default(false),
   isNew: integer('is_new', { mode: 'boolean' }).notNull().default(true), 
-  
+
   // Знижки
   originalPrice: real('original_price'), 
   discountPercent: integer('discount_percent'), 
   saleEndDate: text('sale_end_date'), 
-  
+  saleNotificationId: text('sale_notification_id'), // ← ДОДАНО
+
   // Нотифікації
   notificationId: text('notification_id'), 
   reminderDate: text('reminder_date'), 
   notifyOnRelease: integer('notify_on_release', { mode: 'boolean' }).default(false), 
-  
+
   createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`(unixepoch())`),
 });

@@ -199,7 +199,10 @@ export async function seedGames() {
         releaseDate: game.releaseDate,
         rating: game.rating,
         sold: Boolean(game.sold),
+        isWishlist: false, 
+        isNew: true,       
         createdAt: new Date(),
+        updatedAt: new Date(),
       }).run();
     }
     console.log('🌱 Дані успішно додані');
@@ -208,3 +211,4 @@ export async function seedGames() {
     throw error;
   }
 }
+

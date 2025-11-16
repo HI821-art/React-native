@@ -92,14 +92,15 @@ const GameCard = ({ item, onToggleWishlist, onMarkAsViewed }: Props) => {
         </View>
         
         <View style={styles.metaRow}>
-          {item.originalPrice ? (
-            <View style={styles.priceContainer}>
-              <Text style={styles.originalPrice}>${item.originalPrice.toFixed(2)}</Text>
-              <Text style={styles.salePrice}>💰 ${item.price.toFixed(2)}</Text>
-            </View>
-          ) : (
-            <Text style={styles.price}>💰 ${item.price.toFixed(2)}</Text>
-          )}
+        <View style={styles.priceContainer}>
+  {item.originalPrice != null && (
+    <Text style={styles.originalPrice}>
+      ${(item.originalPrice ?? 0).toFixed(2)}
+    </Text>
+  )}
+  <Text style={styles.salePrice}>💰 ${item.price.toFixed(2)}</Text>
+</View>
+
           
           <Text style={styles.rating}>{getRatingEmoji(item.rating)}</Text>
           <Text style={styles.category}>{item.category}</Text>
